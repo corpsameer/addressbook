@@ -1,5 +1,7 @@
 <?php
-
-echo 'address';
-
+require 'common/header.html';
+require 'common/footer.html';
 ?>
+
+<body>
+</body>
