@@ -1,0 +1,7 @@
+RewriteEngine on
+RewriteCond %{REQUEST_URI} !^/pages/
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ /pages/$1
+RewriteRule ^(/)?$ pages/index.php [L]
+RewriteRule ^([^\.]+)$ $1.php [NC,L]
