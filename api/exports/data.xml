@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Users>
+  <User user_id="8">
+    <user_id>8</user_id>
+    <full_name>John Doe</full_name>
+    <first_name>John</first_name>
+    <last_name>Doe</last_name>
+    <email>johndoe@gmail.com</email>
+    <create_date>2020-04-23 17:36:59</create_date>
+    <address_id>4</address_id>
+    <address_user_id>8</address_user_id>
+    <house_no>h 127</house_no>
+    <street>john doe street</street>
+    <zipcode>aasb141</zipcode>
+    <address_city_id>19</address_city_id>
+    <city_id>19</city_id>
+    <city_name>Michigan</city_name>
+  </User>
+  <User user_id="7">
+    <user_id>7</user_id>
+    <full_name>John Doe</full_name>
+    <first_name>John</first_name>
+    <last_name>Doe</last_name>
+    <email>johndoe@gmail.com</email>
+    <create_date>2020-04-23 17:27:29</create_date>
+    <address_id>3</address_id>
+    <address_user_id>7</address_user_id>
+    <house_no>h 127</house_no>
+    <street>john doe street</street>
+    <zipcode>aasb141</zipcode>
+    <address_city_id>19</address_city_id>
+    <city_id>19</city_id>
+    <city_name>Michigan</city_name>
+  </User>
+  <User user_id="9">
+    <user_id>9</user_id>
+    <full_name>John Doe</full_name>
+    <first_name>John</first_name>
+    <last_name>Doe</last_name>
+    <email>johndoe@gmail.com</email>
+    <create_date>2020-04-23 17:37:10</create_date>
+    <address_id>5</address_id>
+    <address_user_id>9</address_user_id>
+    <house_no>h 127</house_no>
+    <street>john doe street</street>
+    <zipcode>aasb141</zipcode>
+    <address_city_id>19</address_city_id>
+    <city_id>19</city_id>
+    <city_name>Michigan</city_name>
+  </User>
+  <User user_id="1">
+    <user_id>1</user_id>
+    <full_name>Sameer aa Agarwal 1</full_name>
+    <first_name>Sameer aa</first_name>
+    <last_name>Agarwal 1</last_name>
+    <email>corporate.sameeragarwal2@gmail.com</email>
+    <create_date>2020-04-23 11:54:27</create_date>
+    <address_id>1</address_id>
+    <address_user_id>1</address_user_id>
+    <house_no>h 14032</house_no>
+    <street>grihapravesh, sector 76, gr. noida</street>
+    <zipcode>201w57</zipcode>
+    <address_city_id>29</address_city_id>
+    <city_id>29</city_id>
+    <city_name>Wisconsin</city_name>
+  </User>
+</Users>

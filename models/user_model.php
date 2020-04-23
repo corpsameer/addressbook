@@ -1,0 +1,120 @@
+<?php
+require '../config/tables.php';
+require_once 'base_model.php';
+
+class Usermodel extends Basemodel{
+  /**
+  * Constructor
+  *
+  */
+  public function __construct() {
+    parent::__construct();
+  }
+
+  /**
+  * Insert new user to user table
+  *
+  * @param array $userDetails User data
+  *
+  * @return int|boolean
+  */
+  public function insertUser($userDetails) {
+    $columns = $this->implodeColumns(array_keys($userDetails));
+    $values = $this->implodeData($this->escapeData(array_values($userDetails)));
+
+    $query = "INSERT INTO " . TABLE_USER . " ($columns) VALUES ($values)";
+
+    if ($this->db->conn->query($query) === TRUE) {
+      $userId = $this->db->conn->insert_id;
+
+      return $userId;
+    }
+
+    return false;
+  }
+
+  /**
+  * Edit user details in user table
+  *
+  * @param int $userId User id
+  * @param array $userDetails User data
+  *
+  * @return int|boolean
+  */
+  public function updateUser($userId, $userDetails) {
+    $updateData = $this->escapeData($userDetails);
+    $id = $this->escapeData($userId);
+
+    $query = "UPDATE " . TABLE_USER . " SET `full_name` = '$updateData[full_name]', ";
+    $query .= "`first_name` = '$updateData[first_name]', `last_name` = '$updateData[last_name]', ";
+    $query .= "`email` = '$updateData[email]' WHERE `user_id` = '$id'";
+
+    if ($this->db->conn->query($query) === TRUE) {
+      return $userId;
+    }
+
+    return false;
+  }
+
+  /**
+  * Delete user details from user table
+  *
+  * @param int $userId User id
+  *
+  * @return boolean
+  */
+  public function deleteUser($userId) {
+    $id = $this->escapeData($userId);
+
+    $query = "DELETE FROM " . TABLE_USER . " WHERE `user_id` = '$id'";
+
+    if ($this->db->conn->query($query) === TRUE) {
+      return true;
+    }
+
+    return false;
+  }
+
+  /**
+  * Gets details of all users from database joining user, address and city tables
+  *
+  */
+  public function getAllUsers() {
+    $data = [];
+
+    $query = "SELECT u.*, a.*, c.* FROM " . TABLE_USER;
+    $query .= " u INNER JOIN " . TABLE_ADDRESS . " a ON u.user_id = a.address_user_id ";
+    $query .= "INNER JOIN " . TABLE_CITY . " c ON a.address_city_id = c.city_id ORDER BY u.full_name";
+
+    $result = $this->db->conn->query($query);
+
+    if ($result->num_rows > 0) {
+      $data = $result->fetch_all(MYSQLI_ASSOC);
+    }
+
+    return $data;
+  }
+
+  /**
+  * Gets details of the user from database joining user, address and city tables
+  *
+  */
+  public function getUser($userId) {
+    $id = $this->escapeData($userId);
+    $data = [];
+
+    $query = "SELECT u.*, a.*, c.* FROM " . TABLE_USER;
+    $query .= " u INNER JOIN " . TABLE_ADDRESS . " a ON u.user_id = a.address_user_id ";
+    $query .= "INNER JOIN " . TABLE_CITY . " c ON a.address_city_id = c.city_id ";
+    $query .= "WHERE u.user_id = '$id'";
+
+    $result = $this->db->conn->query($query);
+
+    if ($result->num_rows > 0) {
+      $data = $result->fetch_assoc();
+    }
+
+    return $data;
+  }
+}
+?>
