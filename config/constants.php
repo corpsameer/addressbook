@@ -5,10 +5,10 @@ defined('PAGE_NOT_FOUND_CODE')         OR define('PAGE_NOT_FOUND_CODE', 404);
 defined('SUCCESS_CODE')                OR define('SUCCESS_CODE', 200);
 defined('SERVER_ERROR_CODE')           OR define('SERVER_ERROR_CODE', 500);
 
-// Add post fields array
-defined('ADD_POST_FIELDS')
+// Add request fields array
+defined('ADD_REQUEST_FIELDS')
 OR
-define('ADD_POST_FIELDS', [
+define('ADD_REQUEST_FIELDS', [
   'first_name',
   'last_name',
   'email',
@@ -18,10 +18,10 @@ define('ADD_POST_FIELDS', [
   'city_id'
 ]);
 
-// Edit post fields array
-defined('EDIT_POST_FIELDS')
+// Edit/Delete request fields array
+defined('EDIT_REQUEST_FIELDS')
 OR
-define('EDIT_POST_FIELDS', [
+define('EDIT_REQUEST_FIELDS', [
   'user_id',
   'address_id'
 ]);

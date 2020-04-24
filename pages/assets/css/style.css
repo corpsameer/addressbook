@@ -62,3 +62,11 @@ hr.divider {
 .font-helvetica-sans-serif {
   font-family: helvetica sans-serif;;
 }
+
+.table>th, .table>tr {
+   text-align: center;
+}
+
+thead, .modal-header {
+  background-color: rgb(244,98,58,0.8);
+}

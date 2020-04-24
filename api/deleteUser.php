@@ -3,33 +3,40 @@ require_once '../config/constants.php';
 require_once '../classes/User.php';
 require_once '../classes/Address.php';
 
+// Default response for server error
 $response = [
   'status' => SERVER_ERROR_CODE,
   'message' => 'Server error! Please try again',
   'data' => []
 ];
 
-$postData = $_POST;
-$postFields = array_keys($postData);
+// Get data in $_REQUEST variable
+$requestData = $_REQUEST;
 
-if (empty($postData)) {
+// Get all the fields submitted through delete request
+$requestFields = array_keys($requestData);
+
+// Check if request data is empty
+if (empty($requestData)) {
   $response = [
     'status' => BAD_REQUEST_CODE,
     'message' => 'No data submitted',
     'data' => []
   ];
 } else {
-  $missingFields = [];
+  // Get list of mandatory fields not submitted in the request
+  $missingFields = "";
 
-  foreach (EDIT_POST_FIELDS as $field) {
-    if (!in_array($field, $postFields)) {
+  foreach (EDIT_REQUEST_FIELDS as $field) {
+    if (!in_array($field, $requestFields)) {
       $missingFields[$field] = $field . " cannot be empty";
     }
   }
 
+  // Process request if all mandatory fields are submitted
   if (empty($missingFields)) {
-    $userId = $postData['user_id'];
-    $addressId = $postData['address_id'];
+    $userId = $requestData['user_id'];
+    $addressId = $requestData['address_id'];
 
     $address = new Address();
     $addressDeleted = $address->delete($addressId, $userId);
@@ -51,10 +58,11 @@ if (empty($postData)) {
       }
     }
   } else {
+    // Send response with details of missing fields
     $response = [
       'status' => BAD_REQUEST_CODE,
-      'message' => 'Missing Fields',
-      'data' => $missingFields
+      'message' => $missingFields,
+      'data' => []
     ];
   }
 }
