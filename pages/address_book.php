@@ -23,7 +23,7 @@ $cities = $city->fetchAllCities();
     </div>
     <div class="row mt-5">
       <div class="table-responsive">
-        <table class="table table-hover table-bordered" data-pagination="true" id="addressBookTable" data-toggle="table">
+        <table class="table table-hover table-bordered" data-smart-display="true" data-pagination="true" data-search="true" id="addressBookTable" data-toggle="table">
           <thead>
             <tr>
               <th data-field="num" data-sortable="true">Sl. No</th>

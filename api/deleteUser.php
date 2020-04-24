@@ -29,7 +29,7 @@ if (empty($requestData)) {
 
   foreach (EDIT_REQUEST_FIELDS as $field) {
     if (!in_array($field, $requestFields)) {
-      $missingFields[$field] = $field . " cannot be empty";
+      $missingFields .= $field . " cannot be empty<br>";
     }
   }
 

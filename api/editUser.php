@@ -29,13 +29,13 @@ if (empty($requestData)) {
 
   foreach (ADD_REQUEST_FIELDS as $field) {
     if (!in_array($field, $requestFields)) {
-      $missingFields[$field] = $field . " cannot be empty";
+      $missingFields .= $field . " cannot be empty";
     }
   }
 
   foreach (EDIT_REQUEST_FIELDS as $field) {
     if (!in_array($field, $requestFields)) {
-      $missingFields[$field] = $field . " cannot be empty";
+      $missingFields .= $field . " cannot be empty<br>";
     }
   }
 

@@ -17,6 +17,12 @@ if (!empty($data)) {
     'message' => 'Records found',
     'data' => $data
   ];
+} else {
+  $response = [
+    'status' => SUCCESS_CODE,
+    'message' => 'No Records found',
+    'data' => []
+  ];
 }
 
 echo json_encode($response);
