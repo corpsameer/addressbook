@@ -25,4 +25,34 @@ define('EDIT_REQUEST_FIELDS', [
   'user_id',
   'address_id'
 ]);
+
+// Add tag request fields array
+defined('ADD_TAG_REQUEST_FIELDS')
+OR
+define('ADD_TAG_REQUEST_FIELDS', [
+  'tag_name',
+  'tag_description'
+]);
+
+// Edit/Delete tag request fields array
+defined('EDIT_TAG_REQUEST_FIELDS')
+OR
+define('EDIT_TAG_REQUEST_FIELDS', [
+  'tag_id'
+]);
+
+// Add tag to user request fields array
+defined('ADD_TAG_TO_USER_REQUEST_FIELDS')
+OR
+define('ADD_TAG_TO_USER_REQUEST_FIELDS', [
+  'tag_id',
+  'user_id'
+]);
+
+// Edit/Delete tag to user request fields array
+defined('EDIT_TAG_TO_USER_REQUEST_FIELDS')
+OR
+define('EDIT_TAG_TO_USER_REQUEST_FIELDS', [
+  'tag_to_user_id'
+]);
 ?>
