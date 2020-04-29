@@ -6,9 +6,9 @@ defined('SUCCESS_CODE')                OR define('SUCCESS_CODE', 200);
 defined('SERVER_ERROR_CODE')           OR define('SERVER_ERROR_CODE', 500);
 
 // Add request fields array
-defined('ADD_REQUEST_FIELDS')
+defined('ADD_USER_REQUEST_FIELDS')
 OR
-define('ADD_REQUEST_FIELDS', [
+define('ADD_USER_REQUEST_FIELDS', [
   'first_name',
   'last_name',
   'email',
@@ -19,9 +19,9 @@ define('ADD_REQUEST_FIELDS', [
 ]);
 
 // Edit/Delete request fields array
-defined('EDIT_REQUEST_FIELDS')
+defined('EDIT_USER_REQUEST_FIELDS')
 OR
-define('EDIT_REQUEST_FIELDS', [
+define('EDIT_USER_REQUEST_FIELDS', [
   'user_id',
   'address_id'
 ]);

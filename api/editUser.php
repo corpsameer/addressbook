@@ -27,13 +27,13 @@ if (empty($requestData)) {
   // Get list of mandatory fields not submitted in the request
   $missingFields = "";
 
-  foreach (ADD_REQUEST_FIELDS as $field) {
+  foreach (ADD_USER_REQUEST_FIELDS as $field) {
     if (!in_array($field, $requestFields)) {
       $missingFields .= $field . " cannot be empty";
     }
   }
 
-  foreach (EDIT_REQUEST_FIELDS as $field) {
+  foreach (EDIT_USER_REQUEST_FIELDS as $field) {
     if (!in_array($field, $requestFields)) {
       $missingFields .= $field . " cannot be empty<br>";
     }
