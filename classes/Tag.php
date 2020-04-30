@@ -111,5 +111,18 @@ class Tag {
 
     return $data;
   }
+
+  /**
+  * Gets all details of the tag from database
+  *
+  * @param int $tagId Tag id
+  *
+  * @return array
+  */
+  public function fetchTag($tagId) {
+    $data = $this->tagModel->getTag($tagId);
+
+    return $data;
+  }
 }
 ?>

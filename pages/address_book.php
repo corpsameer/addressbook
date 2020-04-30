@@ -41,7 +41,7 @@ $cities = $city->fetchAllCities();
         </table>
       </div>
       <div class="col-md-12 text-center">
-        <ul class="pagination pagination-lg pager" id="paging"></ul>
+        <ul class="pagination"></ul>
       </div>
     </div>
   </div>

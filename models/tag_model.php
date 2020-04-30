@@ -92,5 +92,27 @@ class Tagmodel extends Basemodel{
 
     return $data;;
   }
+
+  /**
+  * Gets details of the tag from database joining user, address and city tables
+  *
+  * @param int $tagId Tag id
+  *
+  * @return array
+  */
+  public function getTag($tagId) {
+    $id = $this->escapeData($tagId);
+    $data = [];
+
+    $query = "SELECT * FROM " . TABLE_TAG . " WHERE `tag_id` = '$id'";
+
+    $result = $this->db->conn->query($query);
+
+    if ($result->num_rows > 0) {
+      $data = $result->fetch_assoc();
+    }
+
+    return $data;
+  }
 }
 ?>
