@@ -6,7 +6,6 @@ $city = new City();
 $cities = $city->fetchAllCities();
 ?>
 
-<body>
   <div class="jumbotron text-uppercase text-center font-weight-bold font-size-2 font-helvetica-sans-serif">Address Book Details</div>
   <div class="container">
     <div class="row text-center hidden-xs">
@@ -123,6 +122,5 @@ $cities = $city->fetchAllCities();
 
   <script src="/assets/javascript/bootstrap-table.min.js"></script>
   <script src="/assets/javascript/address-book.js"></script>
-</body>
 
 <?php require 'common/footer.html'; ?>

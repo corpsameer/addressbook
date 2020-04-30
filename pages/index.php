@@ -1,6 +1,6 @@
 <?php require 'common/header.html'; ?>
 
-<body id="welcome">
+<div id="welcome">
   <div class="container h-100 mt-14">
     <div class="row h-100 align-items-center justify-content-center text-center">
       <div class="align-self-end">
@@ -11,6 +11,6 @@
       </div>
     </div>
   </div>
-</body>
+</div>
 
 <?php require 'common/footer.html'; ?>

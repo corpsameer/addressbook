@@ -1,4 +1,4 @@
-body#welcome {
+div#welcome {
   height: 100vh;
   padding-top: 10rem;
   padding-bottom: calc(10rem - 4.5rem);

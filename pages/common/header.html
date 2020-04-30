@@ -14,3 +14,30 @@
     <script src="/assets/javascript/bootstrap.min.js"></script>
     <script src="https://use.fontawesome.com/releases/v5.13.0/js/all.js" crossorigin="anonymous"></script>
   </head>
+  <body>
+    <nav class="navbar navbar-inverse">
+      <div class="container-fluid">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myMobileNavbar">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <div class="navbar-header">
+          <a class="navbar-brand" href="#">Address Book</a>
+        </div>
+        <ul class="nav navbar-nav navbar-right hidden-xs">
+          <li><a href="/">Home</a></li>
+          <li><a href="/address_book">Address Book</a></li>
+          <li><a href="/tags">Tags</a></li>
+          <li><a href="/contact_groups">Contact Groups</a></li>
+        </ul>
+        <div class="collapse navbar-collapse" id="myMobileNavbar">
+          <ul class="nav navbar-nav hidden-sm hidden-md hidden-lg">
+            <li><a href="/">Home</a></li>
+            <li><a href="/address_book">Address Book</a></li>
+            <li><a href="/tags">Tags</a></li>
+            <li><a href="/contact_groups">Contact Groups</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
