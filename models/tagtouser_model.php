@@ -101,7 +101,7 @@ class Tagtousermodel extends Basemodel{
   public function getTagsLinkedToUser($userId) {
     $data = [];
 
-    $query = "SELECT DISTINCT a.tag_id as tag_id, b.tag_name FROM " . TABLE_TAG_TO_USER . " a ";
+    $query = "SELECT a.* , b.tag_name FROM " . TABLE_TAG_TO_USER . " a ";
     $query .= "join " . TABLE_TAG . " b WHERE a.tag_id = b.tag_id and a.user_id = '$userId' ORDER BY b.tag_name";
 
     $result = $this->db->conn->query($query);

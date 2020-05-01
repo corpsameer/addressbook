@@ -27,6 +27,7 @@ $cities = $city->fetchAllCities();
             <tr>
               <th data-field="num" data-sortable="true">Sl. No</th>
               <th data-field="actions" data-sortable="true">Action</th>
+              <th data-field="tags" data-sortable="true">Tags</th>
               <th data-field="full_name" data-sortable="true">Name</th>
               <th data-field="first_name" data-sortable="true">First Name</th>
               <th data-field="email" data-sortable="true">Email</th>

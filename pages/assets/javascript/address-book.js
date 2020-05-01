@@ -43,10 +43,34 @@ function getAdressTableData() {
         action += '<a href="javascript:deleteUser(' + data[i]['user_id'] +', ' + data[i]['address_id'] + ')" title="Delete">'
         action += '<i class="fa fa-trash" style="color:#DE4949;"></i></a>';
 
+        // Get user tags
+        var tags = [];
+        var userTags = '';
+        $.ajax({
+          url: "/api/getUserTags.php?user_id=" + data[i]['user_id'],
+          type: 'GET',
+          async: false,
+          success:  (response) => {
+            response = JSON.parse(response);
+
+            if (response.status === 200) {
+              tags = response.data;
+            }
+          }
+        });
+
+        for (var k = 0; k < tags.length; k++) {
+          userTags += '<span class="label label-success label-tag">' + tags[k]['tag_name'];
+          userTags += '<a href="javascript:deleteUserTag(' + tags[k]['tag_to_user_id'] + ')" title="Delete">'
+          userTags += '<i class="fa fa-times" aria-hidden="true" style="color:#DE4949;"></i></a>'
+          userTags += '</span>';
+        }
+
         // Push each usr data to rows to be displayed in address book table
         rows.push({
           num: i + 1,
           actions: action,
+          tags: userTags,
           full_name: data[i]['full_name'],
           first_name: data[i]['first_name'],
           email: data[i]['email'],
@@ -75,6 +99,26 @@ function deleteUser(userId, addressId) {
     // Delete request to delete user and address
     $.ajax({
       url: '/api/deleteUser.php?' + $.param({user_id: userId, address_id : addressId}),
+      type: 'DELETE',
+      success: function(response){
+        response = JSON.parse(response);
+        alert(response.message);
+        getAdressTableData();
+      }
+    });
+  }
+}
+
+/**
+ * Delete request to delete tag linked to user
+ *
+ * @param {int} tagToUserId - Tag to user id of tag to user link
+ */
+function deleteUserTag(tagToUserId) {
+  if (confirm("Are you sure you want to delete this tag from user?")) {
+    // Delete request to delete user tag
+    $.ajax({
+      url: '/api/deleteTagFromUser.php?' + $.param({tag_to_user_id: tagToUserId}),
       type: 'DELETE',
       success: function(response){
         response = JSON.parse(response);
