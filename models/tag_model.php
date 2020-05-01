@@ -94,7 +94,7 @@ class Tagmodel extends Basemodel{
   }
 
   /**
-  * Gets details of the tag from database joining user, address and city tables
+  * Gets details of the tag from tag table
   *
   * @param int $tagId Tag id
   *

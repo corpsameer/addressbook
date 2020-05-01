@@ -55,4 +55,19 @@ OR
 define('EDIT_TAG_TO_USER_REQUEST_FIELDS', [
   'tag_to_user_id'
 ]);
+
+// Add contact group request fields array
+defined('ADD_CONTACT_GROUP_REQUEST_FIELDS')
+OR
+define('ADD_CONTACT_GROUP_REQUEST_FIELDS', [
+  'contact_group_name',
+  'contact_group_description'
+]);
+
+// Edit contact group request fields array
+defined('EDIT_CONTACT_GROUP_REQUEST_FIELDS')
+OR
+define('EDIT_CONTACT_GROUP_REQUEST_FIELDS', [
+  'contact_group_id'
+]);
 ?>
