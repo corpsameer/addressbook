@@ -3,6 +3,7 @@
  */
 $(document).ready(function(){
   getAdressTableData();
+  createDynamicTagFilter();
 });
 
 /**
@@ -24,12 +25,12 @@ var fields = {
  * Get data of all the users and show in address book table if request is successful
  * Show error message in case of any error
  */
-function getAdressTableData() {
+function getAdressTableData(tagId = 0) {
   var table = $('#addressBookTable');
   var tableBody = $('#addressBookTableBody');
 
   // Get request to get data of all users
-  $.get("/api/getAllUsers.php", (response) => {
+  $.get("/api/getAllUsers.php?tag_id=" + tagId, (response) => {
     response = JSON.parse(response);
 
     if (response.status === 200) {
@@ -91,6 +92,43 @@ function getAdressTableData() {
 }
 
 /**
+ * Create dynamic dropdown to filter user by tags
+ *
+ * Sends a get requet to get list of all tags that are linked to atleast one user
+ * Creates a dropdown with tags and appends at the top of the user details table to implement filter functionality
+ *
+ */
+function createDynamicTagFilter() {
+  $('#dynamic_tag_filter_container').remove();
+  var filterTags = [];
+  $.ajax({
+    url: "/api/getTagsForFilter.php",
+    type: 'GET',
+    async: false,
+    success:  (response) => {
+      response = JSON.parse(response);
+
+      if (response.status === 200) {
+        filterTags = response.data;
+      }
+    }
+  });
+  var element = '<div class="pull-left search input-group" style="width: 45%;" id="dynamic_tag_filter_container"><div class="form-group">';
+  element += '<label class="control-label col-sm-3" for="dynamic_tag_filter">Filter by tag:</label><div class="col-sm-5">';
+  element += '<select class="form-control" id="dynamic_tag_filter" onchange="getAdressTableData(this.value)">';
+  element += '<option value="0">All rows</option>';
+
+  if (filterTags.length) {
+    for (var i = 0; i < filterTags.length; i++) {
+      element += '<option value=' + filterTags[i]['tag_id'] + '>' + filterTags[i]['tag_name'] + '</option>';
+    }
+  }
+
+  element += '</select></div></div>';
+  $('.fixed-table-toolbar').append(element);
+}
+
+/**
  * Delete request to delete user and corresponding address
  *
  * @param {int} userId - User id of user to be deleted
@@ -106,6 +144,7 @@ function deleteUser(userId, addressId) {
         response = JSON.parse(response);
         alert(response.message);
         getAdressTableData();
+        createDynamicTagFilter();
       }
     });
   }
@@ -126,6 +165,7 @@ function deleteUserTag(tagToUserId) {
         response = JSON.parse(response);
         alert(response.message);
         getAdressTableData();
+        createDynamicTagFilter();
       }
     });
   }
@@ -226,6 +266,13 @@ $('#userDetailsForm').submit(function(e) {
   }
 });
 
+/**
+ * submit user tag details form
+ *
+ * Checks if userId field value is 0 or not
+ * If values is not 0, sends a post request to add new tag to a  user
+ *
+ */
 $('#userTagDetailsForm').submit(function(e) {
   e.preventDefault();
   var userId = $('#tag_user_id').val();
@@ -243,8 +290,8 @@ $('#userTagDetailsForm').submit(function(e) {
       alert(response.message);
 
       if (response.status === 200) {
-        clearUserTagDetailsForm();
         getAdressTableData();
+        createDynamicTagFilter();
       }
     });
   }

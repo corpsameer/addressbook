@@ -76,16 +76,24 @@ class Usermodel extends Basemodel{
   }
 
   /**
-  * Gets details of all users from database joining user, address and city tables
+  * Gets details of all users from database joining user, address and city tables and apply tag filter if applicable
+  *
+  * @param int $tagId Tag id by which users can be filtered
   *
   */
-  public function getAllUsers() {
+  public function getAllUsers($tagId) {
     $data = [];
+    $tagId = $this->escapeData($tagId);
 
     $query = "SELECT u.*, a.*, c.* FROM " . TABLE_USER;
     $query .= " u INNER JOIN " . TABLE_ADDRESS . " a ON u.user_id = a.address_user_id ";
-    $query .= "INNER JOIN " . TABLE_CITY . " c ON a.address_city_id = c.city_id ORDER BY u.full_name";
+    $query .= "INNER JOIN " . TABLE_CITY . " c ON a.address_city_id = c.city_id ";
 
+    if ($tagId != 0) {
+      $query .= "INNER JOIN " . TABLE_TAG_TO_USER . " d ON u.user_id = d.user_id WHERE d.tag_id = '$tagId'";
+    }
+
+    $query .= "ORDER BY u.full_name";
     $result = $this->db->conn->query($query);
 
     if ($result->num_rows > 0) {

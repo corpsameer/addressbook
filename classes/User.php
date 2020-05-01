@@ -127,16 +127,20 @@ class User {
   /**
   * Gets all details of all the users from database
   *
+  * @param int $tagId Tag id by which users are to be filtered
+  *
   * @return array
   */
-  public function fetchAllUsers() {
-    $data = $this->userModel->getAllUsers();
+  public function fetchAllUsers($tagId) {
+    $data = $this->userModel->getAllUsers($tagId);
 
     return $data;
   }
 
   /**
   * Gets all details of the user from database
+  *
+  * @param int $userId User id
   *
   * @return array
   */

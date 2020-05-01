@@ -7,20 +7,29 @@ $response = [
   'message' => 'No records found',
   'data' => []
 ];
+$getData = $_GET;
 
-$user = new User();
-$data = $user->fetchAllUsers();
+if (isset($getData['tag_id'])) {
+  $user = new User();
+  $data = $user->fetchAllUsers($getData['tag_id']);
 
-if (!empty($data)) {
-  $response = [
-    'status' => SUCCESS_CODE,
-    'message' => 'Records found',
-    'data' => $data
-  ];
+  if (!empty($data)) {
+    $response = [
+      'status' => SUCCESS_CODE,
+      'message' => 'Records found',
+      'data' => $data
+    ];
+  } else {
+    $response = [
+      'status' => SUCCESS_CODE,
+      'message' => 'No Records found',
+      'data' => []
+    ];
+  }
 } else {
   $response = [
-    'status' => SUCCESS_CODE,
-    'message' => 'No Records found',
+    'status' => BAD_REQUEST_CODE,
+    'message' => 'Missing required data to complete request',
     'data' => []
   ];
 }
