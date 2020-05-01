@@ -38,7 +38,7 @@ function getAdressTableData(tagId = 0) {
       var data = response.data;
 
       for(var i = 0; i < data.length; i++) {
-        // Create edit and delete action icons for actions column in adres book table
+        // Create edit and delete action icons for actions column in address book table
         var action = '<a href="javascript:addTagToUser(' + data[i]['user_id'] + ')" title="Add tag">';
         action += '<i class="fa fa-plus" style="color:#005b96;"></i></a>'
         action += '<a href="javascript:editUser(' + data[i]['user_id'] +', ' + data[i]['address_id'] + ')" title="Edit user">';
@@ -69,7 +69,7 @@ function getAdressTableData(tagId = 0) {
           userTags += '</span></h5>';
         }
 
-        // Push each usr data to rows to be displayed in address book table
+        // Push each user data to rows to be displayed in address book table
         rows.push({
           num: i + 1,
           actions: action,
