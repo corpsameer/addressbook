@@ -34,6 +34,28 @@ class Tagtousermodel extends Basemodel{
   }
 
   /**
+  * Get details of tag to user link
+  *
+  * @param array $tagToUserDetails Tag to user data
+  *
+  * @return boolean
+  */
+  public function getTagLinkedToUser($tagToUserDetails) {
+    $tagId = $this->escapeData($tagToUserDetails['tag_id']);
+    $userId = $this->escapeData($tagToUserDetails['user_id']);
+    $isLinked = false;
+
+    $query = "SELECT * FROM " . TABLE_TAG_TO_USER . " WHERE `tag_id` = '$tagId' AND `user_id` = '$userId'";
+    $result = $this->db->conn->query($query);
+
+    if ($result->num_rows > 0) {
+      $isLinked = true;
+    }
+
+    return $isLinked;
+  }
+
+  /**
   * Delete tag to user details from tag to user table
   *
   * @param int $tagToUserId Tag to user id

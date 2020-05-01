@@ -54,6 +54,19 @@ class Tagtouser {
   }
 
   /**
+  * Check if tag is already linked to user
+  *
+  * @return boolean
+  */
+  public function checkTagLinkedToUser() {
+    $data = $this->createDataArray();
+
+    $response = $this->tagToUserModel->getTagLinkedToUser($data);
+
+    return $response;
+  }
+
+  /**
   * Delete tag from user
   *
   * @param int $tagToUserId Tag to user id

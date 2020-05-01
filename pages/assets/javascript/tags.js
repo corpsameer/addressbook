@@ -32,9 +32,9 @@ function getTagTableData() {
 
       for(var i = 0; i < data.length; i++) {
         // Create edit and delete action icons for actions column in adres book table
-        var action = '<a href="javascript:editTag(' + data[i]['tag_id'] + ')" title="Edit">';
+        var action = '<a href="javascript:editTag(' + data[i]['tag_id'] + ')" title="Edit tag">';
         action += '<i class="fa fa-pencil-alt" style="color:#15F541;"></i></a>'
-        action += '<a href="javascript:deleteTag(' + data[i]['tag_id'] + ')" title="Delete">'
+        action += '<a href="javascript:deleteTag(' + data[i]['tag_id'] + ')" title="Delete tag">'
         action += '<i class="fa fa-trash" style="color:#DE4949;"></i></a>';
 
         // Push each usr data to rows to be displayed in address book table

@@ -1,9 +1,6 @@
 <?php
 require 'common/header.html';
 require '../classes/Tag.php';
-
-$tag = new Tag();
-$tags = $tag->fetchAllTags();
 ?>
 
 <div class="jumbotron text-uppercase text-center font-weight-bold font-size-2 font-helvetica-sans-serif">Tag Details</div>

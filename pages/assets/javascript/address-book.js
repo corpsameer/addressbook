@@ -38,9 +38,11 @@ function getAdressTableData() {
 
       for(var i = 0; i < data.length; i++) {
         // Create edit and delete action icons for actions column in adres book table
-        var action = '<a href="javascript:editUser(' + data[i]['user_id'] +', ' + data[i]['address_id'] + ')" title="Edit">';
+        var action = '<a href="javascript:addTagToUser(' + data[i]['user_id'] + ')" title="Add tag">';
+        action += '<i class="fa fa-plus" style="color:#005b96;"></i></a>'
+        action += '<a href="javascript:editUser(' + data[i]['user_id'] +', ' + data[i]['address_id'] + ')" title="Edit user">';
         action += '<i class="fa fa-pencil-alt" style="color:#15F541;"></i></a>'
-        action += '<a href="javascript:deleteUser(' + data[i]['user_id'] +', ' + data[i]['address_id'] + ')" title="Delete">'
+        action += '<a href="javascript:deleteUser(' + data[i]['user_id'] +', ' + data[i]['address_id'] + ')" title="Delete user">'
         action += '<i class="fa fa-trash" style="color:#DE4949;"></i></a>';
 
         // Get user tags
@@ -60,10 +62,10 @@ function getAdressTableData() {
         });
 
         for (var k = 0; k < tags.length; k++) {
-          userTags += '<span class="label label-success label-tag">' + tags[k]['tag_name'];
+          userTags += '<h5><span class="label label-success">' + tags[k]['tag_name'];
           userTags += '<a href="javascript:deleteUserTag(' + tags[k]['tag_to_user_id'] + ')" title="Delete">'
           userTags += '<i class="fa fa-times" aria-hidden="true" style="color:#DE4949;"></i></a>'
-          userTags += '</span>';
+          userTags += '</span></h5>';
         }
 
         // Push each usr data to rows to be displayed in address book table
@@ -163,6 +165,15 @@ function editUser(userId, addressId) {
 }
 
 /**
+ * Show modal having list of tags that can be added to selected user
+ *
+ */
+function addTagToUser(userId) {
+  $('#tag_user_id').val(userId);
+  $('#addUserTagModal').modal('show');
+}
+
+/**
  * submit user details form
  *
  * Checks if userId and addressId fields value is 0 or not
@@ -170,7 +181,7 @@ function editUser(userId, addressId) {
  * Else sends a put request to update user and corresponding address details
  *
  */
-$('#userDetailsForm').submit(function(e){
+$('#userDetailsForm').submit(function(e) {
   e.preventDefault();
   var userId = fields.user_id.val();
   var addressId = fields.address_id.val();
@@ -215,6 +226,30 @@ $('#userDetailsForm').submit(function(e){
   }
 });
 
+$('#userTagDetailsForm').submit(function(e) {
+  e.preventDefault();
+  var userId = $('#tag_user_id').val();
+  var tagId = $('#tag_id').val();
+
+  if (userId !== 0) {
+    data = {
+      user_id: userId,
+      tag_id: tagId
+    };
+
+    // Post request to add new tag to user
+    $.post("/api/addTagToUser.php", data, (response) => {
+      response = JSON.parse(response);
+      alert(response.message);
+
+      if (response.status === 200) {
+        clearUserTagDetailsForm();
+        getAdressTableData();
+      }
+    });
+  }
+});
+
 /**
  * Clear form fields when user info modal is closed
  *
@@ -229,6 +264,25 @@ $('#userInfoModal').on('hidden.bs.modal', function (e) {
  */
 function clearUserDetailsForm() {
   $('#userDetailsForm')
+    .find("input,select")
+       .val('')
+       .end();
+}
+
+/**
+ * Clear form fields when add tag to user modal is closed
+ *
+ */
+$('#addUserTagModal').on('hidden.bs.modal', function (e) {
+  clearUserTagDetailsForm();
+});
+
+/**
+ * Clear form fields of add user tag details form
+ *
+ */
+function clearUserTagDetailsForm() {
+  $('#userTagDetailsForm')
     .find("input,select")
        .val('')
        .end();

@@ -35,17 +35,27 @@ if (empty($postData)) {
   // Process request if all mandatory fields are submitted
   if (empty($missingFields)) {
     $tagToUser = new Tagtouser($postData['tag_id'], $postData['user_id']);
-    $tagToUserId = $tagToUser->add();
+    $isTagLinkedToUser = $tagToUser->checkTagLinkedToUser();
 
-    if ($tagToUserId) {
-      $data = [
-        'tag_to_user_id' => $tagToUserId
-      ];
+    if ($isTagLinkedToUser) {
       $response = [
-        'status' => SUCCESS_CODE,
-        'message' => 'Tag added to user successfully',
-        'data' => $data
+        'status' => BAD_REQUEST_CODE,
+        'message' => 'Tag already linked to user',
+        'data' => []
       ];
+    } else {
+      $tagToUserId = $tagToUser->add();
+
+      if ($tagToUserId) {
+        $data = [
+          'tag_to_user_id' => $tagToUserId
+        ];
+        $response = [
+          'status' => SUCCESS_CODE,
+          'message' => 'Tag added to user successfully',
+          'data' => $data
+        ];
+      }
     }
   } else {
     // Send response with details of missing fields
