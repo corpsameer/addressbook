@@ -93,6 +93,19 @@ class Tagtouser {
   }
 
   /**
+  * Delete all tags from given user
+  *
+  * @param int $userId User id
+  *
+  * @return boolean
+  */
+  public function deleteAllTagsFromUser($userId) {
+    $response = $this->tagToUserModel->deleteAllTagsToUser($userId);
+
+    return $response;
+  }
+
+  /**
   * Create array with table columns as keys and user properties as values
   *
   * @return array

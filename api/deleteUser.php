@@ -2,6 +2,8 @@
 require_once '../config/constants.php';
 require_once '../classes/User.php';
 require_once '../classes/Address.php';
+require_once '../classes/Tagtouser.php';
+require_once '../classes/Usertocontactgroup.php';
 
 // Default response for server error
 $response = [
@@ -42,10 +44,19 @@ if (empty($requestData)) {
     $addressDeleted = $address->delete($addressId, $userId);
 
     if ($addressDeleted) {
+      // Delete all tags linked to user
+      $tagToUser = new Tagtouser();
+      $tagsToUserDeleted = $tagToUser->deleteAllTagsFromUser($userId);
+
+      // Delete all contact groups linked to user
+      $userToContactGroup = new Usertocontactgroup();
+      $userToContactGroupDeleted = $userToContactGroup->deleteUserInAllGroups($userId);
+
+      // Delete user
       $user = new User();
       $userDeleted = $user->delete($userId);
 
-      if ($userDeleted) {
+      if ($tagsToUserDeleted && $userToContactGroupDeleted && $userDeleted) {
         $data = [
           'user_id' => $userId,
           'address_id' => $addressId

@@ -94,6 +94,25 @@ class Tagtousermodel extends Basemodel{
   }
 
   /**
+  * Delete all tags from given user
+  *
+  * @param int $userId User id
+  *
+  * @return boolean
+  */
+  public function deleteAllTagsToUser($userId) {
+    $id = $this->escapeData($userId);
+
+    $query = "DELETE FROM " . TABLE_TAG_TO_USER . " WHERE `user_id` = '$id'";
+
+    if ($this->db->conn->query($query) === TRUE) {
+      return true;
+    }
+
+    return false;
+  }
+
+  /**
   * Get details of all tags that are linked to atleast one user
   *
   * @return array
