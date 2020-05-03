@@ -1,6 +1,8 @@
 <?php
 require_once '../config/constants.php';
 require_once '../classes/Contactgroup.php';
+require_once '../classes/Usertocontactgroup.php';
+require_once '../classes/Contactgrouptocontactgroup.php';
 
 // Default response for server error
 $response = [
@@ -35,10 +37,21 @@ if (empty($requestData)) {
   // Process request if all mandatory fields are submitted
   if (empty($missingFields)) {
     $contactGroupId = $requestData['contact_group_id'];
+
+    // Delete users directly linked to the contact group
+    $userToContactGroup = new Usertocontactgroup();
+    $usersDeleted = $userToContactGroup->deleteAllUsersInGroup($contactGroupId);
+
+    // Unlink all the parent and child groups of the contact group
+    $contactGroupToContactGroup = new Contactgrouptocontactgroup();
+    $parentGroupsUnlinked = $contactGroupToContactGroup->unlinkParentGroups($contactGroupId);
+    $childGroupsUnlinked = $contactGroupToContactGroup->unlinkChildGroups($contactGroupId);
+
+    // Delete contact group
     $contactGroup = new Contactgroup();
     $contactGroupDeleted = $contactGroup->delete($contactGroupId);
 
-    if ($contactGroupDeleted) {
+    if ($usersDeleted && $parentGroupsUnlinked && $childGroupsUnlinked && $contactGroupDeleted) {
       $data = [
         'contact_group_id' => $contactGroupId
       ];

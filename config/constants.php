@@ -5,6 +5,10 @@ defined('PAGE_NOT_FOUND_CODE')         OR define('PAGE_NOT_FOUND_CODE', 404);
 defined('SUCCESS_CODE')                OR define('SUCCESS_CODE', 200);
 defined('SERVER_ERROR_CODE')           OR define('SERVER_ERROR_CODE', 500);
 
+// Blocked user from groups status
+defined('STATUS_BLOCKED')              OR define('STATUS_BLOCKED', 1);
+defined('STATUS_NOT_BLOCKED')          OR define('STATUS_NOT_BLOCKED', 0);
+
 // Add request fields array
 defined('ADD_USER_REQUEST_FIELDS')
 OR
