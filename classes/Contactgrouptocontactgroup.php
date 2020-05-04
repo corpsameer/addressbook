@@ -43,7 +43,7 @@ class Contactgrouptocontactgroup {
   * @return boolean
   */
   public function isGroupLinked($parentGroupId, $childGroupId) {
-    $response = $this->contactGroupToContactGroup->checkGrouplink($parentGroupId, $childGroupId);
+    $response = $this->contactGroupToContactGroup->checkGroupLink($parentGroupId, $childGroupId);
 
     return $response;
   }

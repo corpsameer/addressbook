@@ -140,7 +140,7 @@ class User {
   /**
   * Gets all details of the user from database
   *
-  * @param int $userId User id
+  * @param int|array $userId User id
   *
   * @return array
   */

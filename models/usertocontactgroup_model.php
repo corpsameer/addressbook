@@ -16,17 +16,31 @@ class Usertocontactgroupmodel extends Basemodel{
   * Check if user is linked to contact group
   *
   * @param int $userId User id
-  * @param int $contactGroupId Contact group id
+  * @param int|array $contactGroupId Contact group id
   *
   * @return boolean
   */
   public function isUserLinkedToGroup($userId, $contactGroupId) {
     $userId = $this->escapeData($userId);
-    $contactGroupId = $this->escapeData($contactGroupId);
+    $contactGroupIds = "";
+
+    if (is_array($contactGroupId)) {
+      $contactGroupIds = $this->implodeData($this->escapeData(array_values($contactGroupId)));
+    } else {
+      $contactGroupId = $this->escapeData($contactGroupId);
+    }
+
     $isLinked = false;
 
     $query = "SELECT * FROM " . TABLE_USER_TO_CONTACT_GROUP . " ";
-    $query .= "WHERE `user_id` = '$userId' AND `contact_group_id` = '$contactGroupId'";
+    $query .= "WHERE `user_id` = '$userId' AND ";
+
+    if (is_array($contactGroupId)) {
+      $query .= "`contact_group_id` IN ($contactGroupIds) AND `is_blocked` = " . STATUS_NOT_BLOCKED;
+    } else {
+      $query .= "`contact_group_id` = '$contactGroupId'";
+    }
+
     $result = $this->db->conn->query($query);
 
     if ($result->num_rows > 0) {
@@ -110,19 +124,64 @@ class Usertocontactgroupmodel extends Basemodel{
   }
 
   /**
-  * Delete given user from given contact group
+  * Unblock given user from given contact group
   *
   * @param int $userId User id
   * @param int $contactGroupId Contact group id
   *
   * @return boolean
   */
-  public function deleteUserFromGroup($userId, $contactGroupId) {
+  public function unblockUserFromGroup($userId, $contactGroupId) {
     $userId = $this->escapeData($userId);
     $contactGroupId = $this->escapeData($contactGroupId);
 
-    $query = "DELETE FROM " . TABLE_USER_TO_CONTACT_GROUP . " ";
-    $query .= "WHERE `user_id` = '$userId' AND `contact_group_id` = '$contactGroupId'";
+    $query = "REPLACE INTO " . TABLE_USER_TO_CONTACT_GROUP . " ";
+    $query .= "(`user_id`, `contact_group_id`, `is_blocked`) VALUES ('$userId', '$contactGroupId', " . STATUS_NOT_BLOCKED . ")";
+
+    if ($this->db->conn->query($query) === TRUE) {
+      return true;
+    }
+
+    return false;
+  }
+
+  /**
+  * Delete given user from given contact group
+  *
+  * @param int|array $userId User id
+  * @param int|array $contactGroupId Contact group id
+  *
+  * @return boolean
+  */
+  public function deleteUserFromGroup($userId, $contactGroupId) {
+    $userId = $this->escapeData($userId);
+    $contactGroupIds = "";
+
+    if (is_array($contactGroupId)) {
+      $contactGroupIds = $this->implodeData($this->escapeData(array_values($contactGroupId)));
+    } else {
+      $contactGroupId = $this->escapeData($contactGroupId);
+    }
+
+    if (is_array($userId)) {
+      $userIds = $this->implodeData($this->escapeData(array_values($userId)));
+    } else {
+      $userId = $this->escapeData($userId);
+    }
+
+    $query = "DELETE FROM " . TABLE_USER_TO_CONTACT_GROUP . " WHERE ";
+
+    if (is_array($userId)) {
+      $query .= "`user_id` IN ($userIds) AND ";
+    } else {
+      $query .= "`user_id` = '$userId' AND ";
+    }
+
+    if (is_array($contactGroupId)) {
+      $query .= "`contact_group_id` IN ($contactGroupIds) AND `is_blocked` = " . STATUS_NOT_BLOCKED;
+    } else {
+      $query .= "`contact_group_id` = '$contactGroupId'";
+    }
 
     if ($this->db->conn->query($query) === TRUE) {
       return true;
@@ -180,17 +239,32 @@ class Usertocontactgroupmodel extends Basemodel{
   */
   public function getActiveUsersInGroup($contactGroupId) {
     $data = [];
+    $contactGroupIds = "";
 
-    $query = "SELECT `user_id` FROM " . TABLE_USER_TO_CONTACT_GROUP . " ";
-    $query .= "WHERE `contact_group_id` = '$contactGroupId' AND `is_blocked` = " . STATUS_NOT_BLOCKED;
+    if (is_array($contactGroupId)) {
+      $contactGroupIds = $this->implodeData($this->escapeData(array_values($contactGroupId)));
+    } else {
+      $contactGroupId = $this->escapeData($contactGroupId);
+    }
+
+    $query = "SELECT DISTINCT `user_id` FROM " . TABLE_USER_TO_CONTACT_GROUP . " ";
+    $query .= "WHERE `is_blocked` = " . STATUS_NOT_BLOCKED . " AND ";
+
+    if (is_array($contactGroupId)) {
+      $query .= "`contact_group_id` IN ($contactGroupIds)";
+    } else {
+      $query .= "`contact_group_id` = '$contactGroupId'";
+    }
 
     $result = $this->db->conn->query($query);
 
     if ($result->num_rows > 0) {
-      $data = $result->fetch_all(MYSQLI_ASSOC);
+      while ($row = mysqli_fetch_array($result)) {
+        $data[] = $row['user_id'];
+      }
     }
 
-    return $data;;
+    return $data;
   }
 
   /**
@@ -209,7 +283,9 @@ class Usertocontactgroupmodel extends Basemodel{
     $result = $this->db->conn->query($query);
 
     if ($result->num_rows > 0) {
-      $data = $result->fetch_all(MYSQLI_ASSOC);
+      while ($row = mysqli_fetch_array($result)) {
+        $data[] = $row['user_id'];
+      }
     }
 
     return $data;;

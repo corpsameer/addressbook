@@ -2,14 +2,14 @@
 // Response Codes
 defined('BAD_REQUEST_CODE')            OR define('BAD_REQUEST_CODE', 400);
 defined('PAGE_NOT_FOUND_CODE')         OR define('PAGE_NOT_FOUND_CODE', 404);
-defined('SUCCESS_CODE')                OR define('SUCCESS_CODE', 200);
 defined('SERVER_ERROR_CODE')           OR define('SERVER_ERROR_CODE', 500);
+defined('SUCCESS_CODE')                OR define('SUCCESS_CODE', 200);
 
 // Blocked user from groups status
 defined('STATUS_BLOCKED')              OR define('STATUS_BLOCKED', 1);
 defined('STATUS_NOT_BLOCKED')          OR define('STATUS_NOT_BLOCKED', 0);
 
-// Add request fields array
+// Add user request fields array
 defined('ADD_USER_REQUEST_FIELDS')
 OR
 define('ADD_USER_REQUEST_FIELDS', [
@@ -22,7 +22,7 @@ define('ADD_USER_REQUEST_FIELDS', [
   'city_id'
 ]);
 
-// Edit/Delete request fields array
+// Edit/Delete user request fields array
 defined('EDIT_USER_REQUEST_FIELDS')
 OR
 define('EDIT_USER_REQUEST_FIELDS', [
@@ -73,5 +73,21 @@ defined('EDIT_CONTACT_GROUP_REQUEST_FIELDS')
 OR
 define('EDIT_CONTACT_GROUP_REQUEST_FIELDS', [
   'contact_group_id'
+]);
+
+// Add user to group request fields array
+defined('ADD_USER_TO_GROUP_REQUEST_FIELDS')
+OR
+define('ADD_USER_TO_GROUP_REQUEST_FIELDS', [
+  'user_id',
+  'contact_group_id'
+]);
+
+// Add contact group to contact group request fields array
+defined('ADD_GROUP_TO_GROUP_REQUEST_FIELDS')
+OR
+define('ADD_GROUP_TO_GROUP_REQUEST_FIELDS', [
+  'parent_id',
+  'child_id'
 ]);
 ?>

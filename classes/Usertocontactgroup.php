@@ -44,7 +44,7 @@ class Usertocontactgroup {
   * Check if given user is linked to given contact group
   *
   * @param int $userId User id
-  * @param int $contactGroupId Contact group id
+  * @param int|array $contactGroupId Contact group id
   *
   * @return boolean
   */
@@ -97,10 +97,24 @@ class Usertocontactgroup {
   }
 
   /**
-  * Delete given user from given contact group
+  * Unblock given user from given contact group
   *
   * @param int $userId User id
   * @param int $contactGroupId Contact group id
+  *
+  * @return boolean
+  */
+  public function unblockUser($userId, $contactGroupId) {
+    $response = $this->userToContactGroup->unblockUserFromGroup($userId, $contactGroupId);
+
+    return $response;
+  }
+
+  /**
+  * Delete given user from given contact group
+  *
+  * @param int|array $userId User id
+  * @param int|array $contactGroupId Contact group id
   *
   * @return boolean
   */

@@ -19,7 +19,7 @@ class Contactgrouptocontactgroupmodel extends Basemodel{
   *
   * @return boolean
   */
-  public function isGroupLinked($parentGroupId, $childGroupId) {
+  public function checkGroupLink($parentGroupId, $childGroupId) {
     $parentGroupId = $this->escapeData($parentGroupId);
     $childGroupId = $this->escapeData($childGroupId);
     $isLinked = false;
@@ -111,7 +111,9 @@ class Contactgrouptocontactgroupmodel extends Basemodel{
     $result = $this->db->conn->query($query);
 
     if ($result->num_rows > 0) {
-      $data = $result->fetch_all(MYSQLI_ASSOC);
+      while ($row = mysqli_fetch_array($result)) {
+        $data[] = $row['parent_id'];
+      }
     }
 
     return $data;;
@@ -132,7 +134,9 @@ class Contactgrouptocontactgroupmodel extends Basemodel{
     $result = $this->db->conn->query($query);
 
     if ($result->num_rows > 0) {
-      $data = $result->fetch_all(MYSQLI_ASSOC);
+      while ($row = mysqli_fetch_array($result)) {
+        $data[] = $row['child_id'];
+      }
     }
 
     return $data;;

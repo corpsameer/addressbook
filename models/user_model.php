@@ -80,6 +80,7 @@ class Usermodel extends Basemodel{
   *
   * @param int $tagId Tag id by which users can be filtered
   *
+  * @return array
   */
   public function getAllUsers($tagId) {
     $data = [];
@@ -106,20 +107,39 @@ class Usermodel extends Basemodel{
   /**
   * Gets details of the user from database joining user, address and city tables
   *
+  * @param int|array $userId User id whose details are to be fetched
+  *
+  * @return array
   */
   public function getUser($userId) {
-    $id = $this->escapeData($userId);
     $data = [];
+
+    if (is_array($userId)) {
+      $userIds = $this->implodeData($this->escapeData(array_values($userId)));
+    } else {
+      $userId = $this->escapeData($userId);
+    }
+
+
 
     $query = "SELECT u.*, a.*, c.* FROM " . TABLE_USER;
     $query .= " u INNER JOIN " . TABLE_ADDRESS . " a ON u.user_id = a.address_user_id ";
-    $query .= "INNER JOIN " . TABLE_CITY . " c ON a.address_city_id = c.city_id ";
-    $query .= "WHERE u.user_id = '$id'";
+    $query .= "INNER JOIN " . TABLE_CITY . " c ON a.address_city_id = c.city_id WHERE ";
+
+    if (is_array($userId)) {
+      $query .= "u.user_id IN ($userIds)";
+    } else {
+      $query .= "u.user_id = '$userId'";
+    }
 
     $result = $this->db->conn->query($query);
 
     if ($result->num_rows > 0) {
-      $data = $result->fetch_assoc();
+      if (is_array($userId)) {
+        $data = $result->fetch_all(MYSQLI_ASSOC);
+      } else {
+        $data = $result->fetch_assoc();
+      }
     }
 
     return $data;
