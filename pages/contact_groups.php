@@ -149,10 +149,59 @@ $contactGroups = $contactGroup->fetchAllContactGroups();
   </div>
 </div>
 
+<!-- Show all users (direct and linked) in contact group -->
+<div id="viewUsersInGroupModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Users in <span id="groupName"></span> group</h4>
+      </div>
+      <div class="modal-body">
+        <p class="alert alert-info text-center"><strong>Users directly linked to group</strong></p>
+        <div class="table-responsive">
+          <table class="table table-hover table-bordered" data-smart-display="true" data-pagination="true" data-search="true" id="directUsersTable" data-toggle="table" data-page-size="5">
+            <thead>
+              <tr>
+                <th data-field="num" data-sortable="true">Sl. No</th>
+                <th data-field="actions" data-sortable="true">Action</th>
+                <th data-field="full_name" data-sortable="true">Full Name</th>
+                <th data-field="email" data-sortable="true">Email</th>
+                <th data-field="city" data-sortable="true">City</th>
+              </tr>
+            </thead>
+            <tbody id="directUsersTableBody">
+            </tbody>
+          </table>
+        </div>
+        <p class="alert alert-info text-center mt-5"><strong>Users linked to group through child groups</strong></p>
+        <div class="table-responsive">
+          <table class="table table-hover table-bordered" data-smart-display="true" data-pagination="true" data-search="true" id="linkedUsersTable" data-toggle="table" data-page-size="5">
+            <thead>
+              <tr>
+                <th data-field="num" data-sortable="true">Sl. No</th>
+                <th data-field="actions" data-sortable="true">Action</th>
+                <th data-field="full_name" data-sortable="true">Full Name</th>
+                <th data-field="email" data-sortable="true">Email</th>
+                <th data-field="city" data-sortable="true">City</th>
+              </tr>
+            </thead>
+            <tbody id="linkedUsersTableBody">
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <script src="/assets/javascript/bootstrap-table.min.js"></script>
 <script src="/assets/javascript/select-2.min.js"></script>
-<script src="/assets/javascript/contact-group.js"></script>
 <script src="/assets/javascript/contact-group-to-contact-group.js"></script>
 <script src="/assets/javascript/user-to-contact-group.js"></script>
+<script src="/assets/javascript/contact-group.js"></script>
 
 <?php require 'common/footer.html'; ?>

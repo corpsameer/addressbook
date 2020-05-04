@@ -154,11 +154,12 @@ class Usertocontactgroup {
   * Get all active users in given group
   *
   * @param int|array $contactGroupId Contact group id
+  * @param string|array $blockedUsers Users that are blocked and are not to be selected
   *
   * @return array
   */
-  public function fetchActiveUsersInGroup($contactGroupId) {
-    $response = $this->userToContactGroup->getActiveUsersInGroup($contactGroupId);
+  public function fetchActiveUsersInGroup($contactGroupId, $blockedUsers = "") {
+    $response = $this->userToContactGroup->getActiveUsersInGroup($contactGroupId, $blockedUsers);
 
     return $response;
   }

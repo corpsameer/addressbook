@@ -36,8 +36,10 @@ function getContactGroupTableData() {
       var data = response.data;
 
       for(var i = 0; i < data.length; i++) {
-        // Create edit and delete action icons for actions column in contact group table
-        var action = '<a href="javascript:addUserToContactGroup(' + data[i]['contact_group_id'] + ')" title="Add user">';
+        // Create view and add users, link groups and edit and delete contact group action buttons
+        var action = '<a href="javascript:viewUsersInContactGroup(' + data[i]['contact_group_id'] + ', \'' + data[i]['contact_group_name'] + '\')" title="View users">';
+        action += '<i class="fa fa-search" style="color:#8B008B;"></i></a>';
+        action += '<a href="javascript:addUserToContactGroup(' + data[i]['contact_group_id'] + ')" title="Add user">';
         action += '<i class="fa fa-plus" style="color:#005b96;"></i></a>';
         action += '<a href="javascript:linkGroupToContactGroup(' + data[i]['contact_group_id'] + ')" title="Link group">';
         action += '<i class="fa fa-link" style="color:#585858;"></i></a>';

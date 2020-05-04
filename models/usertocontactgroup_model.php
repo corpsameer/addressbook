@@ -234,17 +234,23 @@ class Usertocontactgroupmodel extends Basemodel{
   * Get all active users in given group
   *
   * @param int|array $contactGroupId Contact group id
+  * @param string|array $blockedUsers Users that are blocked and are not to be selected
   *
   * @return array
   */
-  public function getActiveUsersInGroup($contactGroupId) {
+  public function getActiveUsersInGroup($contactGroupId, $blockedUsers = "") {
     $data = [];
     $contactGroupIds = "";
+    $blockedUserIds = "";
 
     if (is_array($contactGroupId)) {
       $contactGroupIds = $this->implodeData($this->escapeData(array_values($contactGroupId)));
     } else {
       $contactGroupId = $this->escapeData($contactGroupId);
+    }
+
+    if (is_array($blockedUsers)) {
+      $blockedUserIds = $this->implodeData($this->escapeData(array_values($blockedUsers)));
     }
 
     $query = "SELECT DISTINCT `user_id` FROM " . TABLE_USER_TO_CONTACT_GROUP . " ";
@@ -254,6 +260,10 @@ class Usertocontactgroupmodel extends Basemodel{
       $query .= "`contact_group_id` IN ($contactGroupIds)";
     } else {
       $query .= "`contact_group_id` = '$contactGroupId'";
+    }
+
+    if (is_array($blockedUsers)) {
+      $query .= " AND `user_id` NOT IN ($blockedUserIds)";
     }
 
     $result = $this->db->conn->query($query);

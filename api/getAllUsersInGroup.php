@@ -27,8 +27,11 @@ if (isset($getData['contact_group_id'])) {
   // Get list of all users linked directly to the group and are not blocked in this group
   $directUsers = $userToContactGroup->fetchActiveUsersInGroup($getData['contact_group_id']);
 
-  // Get list of all users linked to child groups and are not blocked
-  $linkedUsers = $userToContactGroup->fetchActiveUsersInGroup($childGroups);
+  // Get list of all users that are blocked in this group
+  $blockedUsers = $userToContactGroup->fetchBlockedUsersInGroup($getData['contact_group_id']);
+  
+  // Get list of all users linked to child groups and are not blocked in child as well us selected group
+  $linkedUsers = $userToContactGroup->fetchActiveUsersInGroup($childGroups, $blockedUsers);
 
   // Get details of users directly linked to selected group
   $data['direct_users'] = $user->fetchUser($directUsers);
