@@ -1,4 +1,9 @@
 /**
+ * Apply select2 to dropdowns with search functionality
+ */
+$('.select2').select2();
+
+/**
  * Load data in contact group table on page load
  */
 $(document).ready(function(){
@@ -32,8 +37,12 @@ function getContactGroupTableData() {
 
       for(var i = 0; i < data.length; i++) {
         // Create edit and delete action icons for actions column in contact group table
-        var action = '<a href="javascript:editContactGroup(' + data[i]['contact_group_id'] + ')" title="Edit contact group">';
-        action += '<i class="fa fa-pencil-alt" style="color:#15F541;"></i></a>'
+        var action = '<a href="javascript:addUserToContactGroup(' + data[i]['contact_group_id'] + ')" title="Add user">';
+        action += '<i class="fa fa-plus" style="color:#005b96;"></i></a>';
+        action += '<a href="javascript:linkGroupToContactGroup(' + data[i]['contact_group_id'] + ')" title="Link group">';
+        action += '<i class="fa fa-link" style="color:#585858;"></i></a>';
+        action += '<a href="javascript:editContactGroup(' + data[i]['contact_group_id'] + ')" title="Edit contact group">';
+        action += '<i class="fa fa-pencil-alt" style="color:#15F541;"></i></a>';
         action += '<a href="javascript:deleteContactGroup(' + data[i]['contact_group_id'] + ')" title="Delete contact group">'
         action += '<i class="fa fa-trash" style="color:#DE4949;"></i></a>';
 

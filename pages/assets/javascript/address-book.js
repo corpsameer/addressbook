@@ -1,4 +1,9 @@
 /**
+ * Apply select2 to dropdowns with search functionality
+ */
+$('.select2').select2();
+
+/**
  * Load data in address book table on page load
  */
 $(document).ready(function(){
@@ -321,16 +326,5 @@ function clearUserDetailsForm() {
  *
  */
 $('#addUserTagModal').on('hidden.bs.modal', function (e) {
-  clearUserTagDetailsForm();
+  $('#tag_id').val('').trigger('change');
 });
-
-/**
- * Clear form fields of add user tag details form
- *
- */
-function clearUserTagDetailsForm() {
-  $('#userTagDetailsForm')
-    .find("input,select")
-       .val('')
-       .end();
-}

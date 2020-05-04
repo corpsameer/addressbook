@@ -139,7 +139,7 @@ $tags = $tag->fetchAllTags();
             <div class="form-group">
               <label class="control-label col-sm-3" for="tag_id">Tag:</label>
               <div class="col-sm-8">
-                <select class="form-control" name="tag_id" id="tag_id" placeholder="Select tag" required>
+                <select class="form-control select2" name="tag_id" id="tag_id" placeholder="Select tag" required>
                   <option value="">-- Select tag --</option>
                   <?php foreach ($tags as $tag): ?>
                     <option value=<?= $tag['tag_id']; ?>><?= $tag['tag_name']; ?></option>
@@ -163,6 +163,7 @@ $tags = $tag->fetchAllTags();
   </div>
 
   <script src="/assets/javascript/bootstrap-table.min.js"></script>
+  <script src="/assets/javascript/select-2.min.js"></script>
   <script src="/assets/javascript/address-book.js"></script>
 
 <?php require 'common/footer.html'; ?>

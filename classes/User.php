@@ -131,7 +131,7 @@ class User {
   *
   * @return array
   */
-  public function fetchAllUsers($tagId) {
+  public function fetchAllUsers($tagId = 0) {
     $data = $this->userModel->getAllUsers($tagId);
 
     return $data;
